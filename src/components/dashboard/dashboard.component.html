@@ -1,0 +1,54 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Welcome, {{ currentAccount?.name }}</h1>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    <div class="balance-card">
+      <h2>Account Balance</h2>
+      <div class="balance-amount">${{ currentBalance | number:'1.2-2' }}</div>
+      <p class="account-info">Account ID: {{ currentAccount?.id }}</p>
+    </div>
+
+    <div class="actions-grid">
+      <div class="action-card" (click)="navigateTo('/deposit')">
+        <div class="action-icon deposit-icon">💰</div>
+        <h3>Deposit</h3>
+        <p>Add money to your account</p>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/withdraw')">
+        <div class="action-icon withdraw-icon">💸</div>
+        <h3>Withdraw</h3>
+        <p>Take money from your account</p>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/transfer')">
+        <div class="action-icon transfer-icon">🔄</div>
+        <h3>Transfer</h3>
+        <p>Send money to another account</p>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/beneficiaries')">
+        <div class="action-icon beneficiary-icon">👥</div>
+        <h3>Beneficiaries</h3>
+        <p>Manage your beneficiaries</p>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/transactions')">
+        <div class="action-icon transaction-icon">📋</div>
+        <h3>Transactions</h3>
+        <p>View your transaction history</p>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/profile')">
+        <div class="action-icon profile-icon">⚙️</div>
+        <h3>Profile</h3>
+        <p>Edit your account details</p>
+      </div>
+    </div>
+  </div>
+</div>

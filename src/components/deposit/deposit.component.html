@@ -1,0 +1,52 @@
+<div class="deposit-container">
+  <div class="deposit-card">
+    <div class="card-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h1>Deposit Money</h1>
+    </div>
+
+    <div class="account-info">
+      <p><strong>Account:</strong> {{ currentAccount?.name }}</p>
+      <p><strong>Account ID:</strong> {{ currentAccount?.id }}</p>
+    </div>
+
+    <form (ngSubmit)="onDeposit()" class="deposit-form">
+      <div class="input-group">
+        <label for="amount">Deposit Amount</label>
+        <div class="amount-input-wrapper">
+          <span class="currency-symbol">$</span>
+          <input
+            type="number"
+            id="amount"
+            [(ngModel)]="amount"
+            name="amount"
+            placeholder="0.00"
+            min="0.01"
+            step="0.01"
+            required
+            class="amount-input"
+          />
+        </div>
+      </div>
+
+      <div class="message" *ngIf="message" [class]="messageType">
+        {{ message }}
+      </div>
+
+      <button type="submit" class="deposit-btn" [disabled]="isLoading || !amount">
+        <span *ngIf="isLoading">Processing...</span>
+        <span *ngIf="!isLoading">Deposit Funds</span>
+      </button>
+    </form>
+
+    <div class="quick-amounts">
+      <h3>Quick Deposit</h3>
+      <div class="quick-buttons">
+        <button class="quick-btn" (click)="amount = 20">$20</button>
+        <button class="quick-btn" (click)="amount = 50">$50</button>
+        <button class="quick-btn" (click)="amount = 100">$100</button>
+        <button class="quick-btn" (click)="amount = 200">$200</button>
+      </div>
+    </div>
+  </div>
+</div>

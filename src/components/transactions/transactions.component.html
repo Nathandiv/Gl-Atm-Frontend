@@ -1,0 +1,62 @@
+<div class="transactions-container">
+  <div class="transactions-card">
+    <div class="card-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h1>Transaction History</h1>
+    </div>
+
+    <div class="account-info">
+      <p><strong>Account:</strong> {{ currentAccount?.name }}</p>
+      <p><strong>Account ID:</strong> {{ currentAccount?.id }}</p>
+    </div>
+
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+      <p>Loading transactions...</p>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && transactions.length === 0">
+      <div class="empty-icon">📋</div>
+      <h3>No Transactions Yet</h3>
+      <p>Your transaction history will appear here once you start using your account.</p>
+    </div>
+
+    <div class="transactions-list" *ngIf="!isLoading && transactions.length > 0">
+      <div class="transaction-item" *ngFor="let transaction of transactions" [class]="getTransactionClass(transaction.type)">
+        <div class="transaction-icon">
+          {{ getTransactionIcon(transaction.type) }}
+        </div>
+        
+        <div class="transaction-details">
+          <div class="transaction-type">{{ transaction.type | titlecase }}</div>
+          <div class="transaction-date">{{ formatDate(transaction.timestamp) }}</div>
+        </div>
+        
+        <div class="transaction-amounts">
+          <div class="transaction-amount" [class]="getTransactionClass(transaction.type)">
+            <span *ngIf="getTransactionClass(transaction.type) === 'credit'">+</span>
+            <span *ngIf="getTransactionClass(transaction.type) === 'debit'">-</span>
+            ${{ transaction.amount | number:'1.2-2' }}
+          </div>
+          <div class="balance-after">
+            Balance: ${{ transaction.balanceAfter | number:'1.2-2' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="transaction-summary" *ngIf="!isLoading && transactions.length > 0">
+      <h3>Summary</h3>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="summary-label">Total Transactions</span>
+          <span class="summary-value">{{ transactions.length }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Latest Balance</span>
+          <span class="summary-value">${{ transactions[0]?.balanceAfter | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

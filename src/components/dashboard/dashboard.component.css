@@ -1,0 +1,143 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: #f7fafc;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.logout-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 25px rgba(72, 187, 120, 0.3);
+}
+
+.balance-card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.balance-amount {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.account-info {
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.action-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.action-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-card h3 {
+  color: #2d3748;
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.action-card p {
+  color: #718096;
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .header-content h1 {
+    font-size: 24px;
+  }
+
+  .balance-amount {
+    font-size: 36px;
+  }
+
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-content {
+    padding: 20px;
+  }
+}

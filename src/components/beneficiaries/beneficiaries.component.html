@@ -1,0 +1,72 @@
+<div class="beneficiaries-container">
+  <div class="beneficiaries-card">
+    <div class="card-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h1>Manage Beneficiaries</h1>
+      <button class="add-btn" (click)="showAddForm = !showAddForm" *ngIf="getAvailableAccounts().length > 0">
+        {{ showAddForm ? 'Cancel' : '+ Add' }}
+      </button>
+    </div>
+
+    <div class="add-form" *ngIf="showAddForm && getAvailableAccounts().length > 0">
+      <h3>Add New Beneficiary</h3>
+      <form (ngSubmit)="addBeneficiary()" class="beneficiary-form">
+        <div class="input-group">
+          <label for="recipient">Select Account</label>
+          <select
+            id="recipient"
+            [(ngModel)]="selectedRecipientId"
+            name="recipient"
+            required
+            class="form-select"
+          >
+            <option value="">Choose account...</option>
+            <option *ngFor="let account of getAvailableAccounts()" [value]="account.id">
+              {{ account.name }} (ID: {{ account.id }})
+            </option>
+          </select>
+        </div>
+
+        <div class="message" *ngIf="message" [class]="messageType">
+          {{ message }}
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isLoading || !selectedRecipientId">
+          <span *ngIf="isLoading">Adding...</span>
+          <span *ngIf="!isLoading">Add Beneficiary</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="beneficiaries-list">
+      <h3>Your Beneficiaries</h3>
+      
+      <div class="empty-state" *ngIf="beneficiaries.length === 0">
+        <div class="empty-icon">👥</div>
+        <p>No beneficiaries added yet</p>
+        <p class="empty-subtitle">Add beneficiaries to make transfers faster and easier</p>
+      </div>
+
+      <div class="beneficiary-grid" *ngIf="beneficiaries.length > 0">
+        <div class="beneficiary-card" *ngFor="let beneficiary of beneficiaries">
+          <div class="beneficiary-info">
+            <div class="beneficiary-avatar">{{ getAccountName(beneficiary.recipientId).charAt(0).toUpperCase() }}</div>
+            <div class="beneficiary-details">
+              <h4>{{ getAccountName(beneficiary.recipientId) }}</h4>
+              <p>Account ID: {{ beneficiary.recipientId }}</p>
+            </div>
+          </div>
+          <div class="beneficiary-actions">
+            <button class="transfer-btn-small" (click)="transferToBeneficiary(beneficiary.recipientId)">
+              Transfer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-accounts" *ngIf="getAvailableAccounts().length === 0 && beneficiaries.length > 0">
+      <p>All available accounts have been added as beneficiaries.</p>
+    </div>
+  </div>
+</div>

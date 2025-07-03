@@ -1,0 +1,111 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="card-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h1>Account Profile</h1>
+    </div>
+
+    <div class="profile-info">
+      <div class="profile-avatar">
+        {{ currentAccount?.name?.charAt(0)?.toUpperCase() }}
+      </div>
+      
+      <div class="profile-details">
+        <div class="detail-row">
+          <label>Account ID</label>
+          <span class="detail-value">{{ currentAccount?.id }}</span>
+        </div>
+        
+        <div class="detail-row">
+          <label>Full Name</label>
+          <div class="name-section">
+            <span class="detail-value" *ngIf="!editMode">{{ currentAccount?.name }}</span>
+            <input 
+              type="text" 
+              [(ngModel)]="editedName" 
+              class="edit-input"
+              *ngIf="editMode"
+              placeholder="Enter your name"
+              maxlength="50"
+            />
+            <button class="edit-btn" (click)="enableEditMode()" *ngIf="!editMode">
+              ✏️ Edit
+            </button>
+          </div>
+        </div>
+        
+        <div class="detail-row">
+          <label>PIN Status</label>
+          <span class="detail-value">
+            <span class="status-badge">🔒 Protected</span>
+          </span>
+        </div>
+        
+        <div class="detail-row">
+          <label>Account Type</label>
+          <span class="detail-value">Savings Account</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="message" *ngIf="message" [class]="messageType">
+      {{ message }}
+    </div>
+
+    <div class="action-buttons" *ngIf="editMode">
+      <button class="save-btn" (click)="saveChanges()">
+        Save Changes
+      </button>
+      <button class="cancel-btn" (click)="cancelEdit()">
+        Cancel
+      </button>
+    </div>
+
+    <div class="security-section">
+      <h3>Security Settings</h3>
+      <div class="security-info">
+        <div class="security-item">
+          <div class="security-icon">🔐</div>
+          <div class="security-text">
+            <h4>PIN Protection</h4>
+            <p>Your account is secured with a 4-digit PIN</p>
+          </div>
+          <div class="security-status">
+            <span class="status-active">Active</span>
+          </div>
+        </div>
+        
+        <div class="security-item">
+          <div class="security-icon">🛡️</div>
+          <div class="security-text">
+            <h4>Account Encryption</h4>
+            <p>All transactions are encrypted and secure</p>
+          </div>
+          <div class="security-status">
+            <span class="status-active">Enabled</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="account-actions">
+      <h3>Quick Actions</h3>
+      <div class="action-grid">
+        <button class="action-card" (click)="router.navigate(['/transactions'])">
+          <div class="action-icon">📋</div>
+          <span>View Transactions</span>
+        </button>
+        
+        <button class="action-card" (click)="router.navigate(['/beneficiaries'])">
+          <div class="action-icon">👥</div>
+          <span>Manage Beneficiaries</span>
+        </button>
+        
+        <button class="action-card" (click)="router.navigate(['/dashboard'])">
+          <div class="action-icon">🏠</div>
+          <span>Dashboard</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

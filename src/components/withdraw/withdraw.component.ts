@@ -1,0 +1,93 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AccountService } from '../../services/account.service';
+import { Account, WithdrawRequest } from '../../models/account.model';
+
+@Component({
+  selector: 'app-withdraw',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './withdraw.component.html',
+  styleUrls: ['./withdraw.component.css']
+})
+export class WithdrawComponent implements OnInit {
+  currentAccount: Account | null = null;
+  currentBalance: number = 0;
+  amount: number = 0;
+  isLoading = false;
+  message = '';
+  messageType = '';
+
+  constructor(private accountService: AccountService, private router: Router) {}
+
+  ngOnInit() {
+    this.currentAccount = this.accountService.getCurrentAccount();
+    if (!this.currentAccount) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.loadBalance();
+  }
+
+  loadBalance() {
+    if (this.currentAccount) {
+      this.accountService.getBalance(this.currentAccount.id).subscribe({
+        next: (balance) => {
+          this.currentBalance = balance;
+        },
+        error: (error) => {
+          console.error('Error loading balance:', error);
+        }
+      });
+    }
+  }
+
+  onWithdraw() {
+    if (!this.currentAccount) return;
+
+    if (!this.amount || this.amount <= 0) {
+      this.showMessage('Please enter a valid amount', 'error');
+      return;
+    }
+
+    if (this.amount > this.currentBalance) {
+      this.showMessage('Insufficient funds', 'error');
+      return;
+    }
+
+    this.isLoading = true;
+    this.message = '';
+
+    const withdrawRequest: WithdrawRequest = {
+      accountId: this.currentAccount.id,
+      amount: this.amount
+    };
+
+    this.accountService.withdraw(withdrawRequest).subscribe({
+      next: (response) => {
+        this.showMessage('Withdrawal successful!', 'success');
+        this.amount = 0;
+        this.loadBalance();
+        this.isLoading = false;
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 2000);
+      },
+      error: (error) => {
+        this.showMessage('Withdrawal failed. Please try again.', 'error');
+        this.isLoading = false;
+      }
+    });
+  }
+
+  showMessage(text: string, type: string) {
+    this.message = text;
+    this.messageType = type;
+  }
+
+  goBack() {
+    this.router.navigate(['/dashboard']);
+  }
+}

@@ -1,0 +1,271 @@
+.beneficiaries-container {
+  min-height: 100vh;
+  background: #f7fafc;
+  padding: 20px;
+}
+
+.beneficiaries-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.card-header h1 {
+  color: #2d3748;
+  font-size: 28px;
+  margin: 0;
+  font-weight: 700;
+  flex: 1;
+}
+
+.back-btn, .add-btn {
+  background: none;
+  border: 2px solid #4299e1;
+  color: #4299e1;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.back-btn:hover, .add-btn:hover {
+  background: #4299e1;
+  color: white;
+}
+
+.add-form {
+  background: #f7fafc;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border-left: 4px solid #48bb78;
+}
+
+.add-form h3 {
+  color: #2d3748;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.beneficiary-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+  transition: border-color 0.3s;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #48bb78;
+  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.1);
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.message.success {
+  background: #c6f6d5;
+  color: #276749;
+  border: 1px solid #9ae6b4;
+}
+
+.message.error {
+  background: #fed7d7;
+  color: #c53030;
+  border: 1px solid #fc8181;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  align-self: flex-start;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.beneficiaries-list h3 {
+  color: #2d3748;
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #718096;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.empty-state p {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.beneficiary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.beneficiary-card {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s;
+}
+
+.beneficiary-card:hover {
+  border-color: #4299e1;
+  box-shadow: 0 4px 15px rgba(66, 153, 225, 0.1);
+}
+
+.beneficiary-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.beneficiary-avatar {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.beneficiary-details h4 {
+  margin: 0 0 4px 0;
+  color: #2d3748;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.beneficiary-details p {
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+}
+
+.transfer-btn-small {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.transfer-btn-small:hover {
+  transform: translateY(-1px);
+}
+
+.no-accounts {
+  text-align: center;
+  padding: 20px;
+  color: #718096;
+  background: #f7fafc;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .beneficiaries-container {
+    padding: 10px;
+  }
+
+  .beneficiaries-card {
+    padding: 20px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-header h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .beneficiary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .beneficiary-card {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
