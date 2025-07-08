@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Account, LoginRequest, RegisterRequest, WithdrawRequest, AddBeneficiaryRequest, Beneficiary, BankTransaction } from '../models/account.model';
+import { Account, LoginRequest, RegisterRequest, WithdrawRequest, AddBeneficiaryRequest, Beneficiary, BankTransaction, UpdateRequest } from '../models/account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +44,12 @@ export class AccountService {
     this.currentAccountSubject.next(account);
     localStorage.setItem('currentAccount', JSON.stringify(account));
   }
+
+  updateAccount(id: number, updateRequest: UpdateRequest): Observable<Account> {
+  return this.http.put<Account>(`${this.baseUrl}/account/${id}`, updateRequest)
+    .pipe(catchError(this.handleError));
+}
+
 
   getCurrentAccount(): Account | null {
     return this.currentAccountSubject.value;
