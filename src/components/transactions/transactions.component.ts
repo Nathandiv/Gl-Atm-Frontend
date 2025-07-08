@@ -31,7 +31,7 @@ export class TransactionsComponent implements OnInit {
     if (this.currentAccount) {
       this.accountService.getTransactions(this.currentAccount.id).subscribe({
         next: (transactions) => {
-          this.transactions = transactions.sort((a, b) => 
+          this.transactions = transactions.sort((a, b) =>
             new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
           );
           this.isLoading = false;
@@ -56,13 +56,13 @@ export class TransactionsComponent implements OnInit {
 
   getTransactionClass(type: string): string {
     switch (type.toLowerCase()) {
-      case 'deposit': 
-      case 'transfer_in': 
+      case 'deposit':
+      case 'transfer_in':
         return 'credit';
-      case 'withdrawal': 
-      case 'transfer_out': 
+      case 'withdrawal':
+      case 'transfer_out':
         return 'debit';
-      default: 
+      default:
         return 'neutral';
     }
   }

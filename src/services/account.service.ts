@@ -91,15 +91,19 @@ export class AccountService {
       .pipe(catchError(this.handleError));
   }
 
-  transfer(senderId: number, recipientId: number, amount: number): Observable<string> {
-    const params = new HttpParams()
-      .set('senderId', senderId.toString())
-      .set('recipientId', recipientId.toString())
-      .set('amount', amount.toString());
-    console.log('Transfer request - URL:', `${this.baseUrl}/transfer`, 'Params:', params.toString());
-    return this.http.post(`${this.baseUrl}/transfer`, null, { params, responseType: 'text' })
-      .pipe(catchError(this.handleError));
-  }
+transfer(senderId: number, recipientId: number, amount: number, pin: number): Observable<string> {
+  const params = new HttpParams()
+    .set('senderId', senderId.toString())
+    .set('recipientId', recipientId.toString())
+    .set('amount', amount.toString())
+    .set('pin', pin.toString()); // ✅ Include the missing pin
+
+  console.log('Transfer request - URL:', `${this.baseUrl}/transfer`, 'Params:', params.toString());
+
+  return this.http.post(`${this.baseUrl}/transfer`, null, { params, responseType: 'text' })
+    .pipe(catchError(this.handleError));
+}
+
 
   // Alternative transfer method using request body (in case backend expects body)
   transferWithBody(senderId: number, recipientId: number, amount: number): Observable<string> {

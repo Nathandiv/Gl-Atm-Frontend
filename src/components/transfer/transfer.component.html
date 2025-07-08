@@ -53,6 +53,21 @@
         </div>
       </div>
 
+      <div class="input-group">
+  <label for="pin">PIN</label>
+  <input
+    type="password"
+    id="pin"
+    [(ngModel)]="pin"
+    name="pin"
+    maxlength="4"
+    minlength="4"
+    required
+    placeholder="Enter your 4-digit PIN"
+    class="amount-input"
+  />
+</div>
+
       <div class="message" *ngIf="message" [class]="messageType">
         {{ message }}
       </div>

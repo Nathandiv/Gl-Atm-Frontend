@@ -17,6 +17,7 @@ export class TransferComponent implements OnInit {
   currentBalance: number = 0;
   recipientId: number = 0;
   amount: number = 0;
+  pin: number = 0;
   allAccounts: Account[] = [];
   isLoading = false;
   message = '';
@@ -70,57 +71,70 @@ export class TransferComponent implements OnInit {
     });
   }
 
-  onTransfer() {
-    if (!this.currentAccount) return;
+onTransfer() {
+  if (!this.currentAccount) return;
 
-    if (!this.recipientId) {
-      this.showMessage('Please select a recipient', 'error');
-      return;
-    }
-
-    if (!this.amount || this.amount <= 0) {
-      this.showMessage('Please enter a valid amount', 'error');
-      return;
-    }
-
-    if (this.amount > this.currentBalance) {
-      this.showMessage('Insufficient funds', 'error');
-      return;
-    }
-
-    if (this.recipientId === this.currentAccount.id) {
-      this.showMessage('Cannot transfer to your own account', 'error');
-      return;
-    }
-
-    this.isLoading = true;
-    this.message = '';
-
-    console.log('Transfer request:', {
-      senderId: this.currentAccount.id,
-      recipientId: this.recipientId,
-      amount: this.amount
-    });
-
-    this.accountService.transfer(this.currentAccount.id, this.recipientId, this.amount).subscribe({
-      next: (response) => {
-        console.log('Transfer response:', response);
-        this.showMessage('Transfer successful!', 'success');
-        this.amount = 0;
-        this.recipientId = 0;
-        this.loadBalance();
-        this.isLoading = false;
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 2000);
-      },
-      error: (error) => {
-        console.error('Transfer error:', error);
-        this.showMessage('Transfer failed. Please try again.', 'error');
-        this.isLoading = false;
-      }
-    });
+  if (!this.recipientId) {
+    this.showMessage('Please select a recipient', 'error');
+    return;
   }
+
+  if (!this.amount || this.amount <= 0) {
+    this.showMessage('Please enter a valid amount', 'error');
+    return;
+  }
+
+  if (this.amount > this.currentBalance) {
+    this.showMessage('Insufficient funds', 'error');
+    return;
+  }
+
+  if (this.recipientId === this.currentAccount.id) {
+    this.showMessage('Cannot transfer to your own account', 'error');
+    return;
+  }
+
+  if (!this.pin || this.pin.toString().length !== 4) {
+    this.showMessage('Please enter a valid 4-digit PIN', 'error');
+    return;
+  }
+
+  this.isLoading = true;
+  this.message = '';
+
+  console.log('Transfer request:', {
+    senderId: this.currentAccount.id,
+    recipientId: this.recipientId,
+    amount: this.amount,
+    pin: this.pin
+  });
+
+  this.accountService.transfer(
+    this.currentAccount.id,
+    this.recipientId,
+    this.amount,
+    this.pin // ✅ Include the required 4th argument
+  ).subscribe({
+    next: (response) => {
+      console.log('Transfer response:', response);
+      this.showMessage('Transfer successful!', 'success');
+      this.amount = 0;
+      this.recipientId = 0;
+      this.pin = 0;
+      this.loadBalance();
+      this.isLoading = false;
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']);
+      }, 2000);
+    },
+    error: (error) => {
+      console.error('Transfer error:', error);
+      this.showMessage('Transfer failed. Please try again.', 'error');
+      this.isLoading = false;
+    }
+  });
+}
+
 
   getRecipientName(): string {
     const recipient = this.allAccounts.find(account => account.id === this.recipientId);
