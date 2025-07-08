@@ -41,20 +41,32 @@ export class ProfileComponent implements OnInit {
     this.message = '';
   }
 
-  saveChanges() {
-    if (!this.editedName || this.editedName.trim().length < 2) {
-      this.showMessage('Name must be at least 2 characters long', 'error');
-      return;
-    }
-
-    // For now, just update the local storage since we don't have an update endpoint
-    if (this.currentAccount) {
-      this.currentAccount.name = this.editedName.trim();
-      this.accountService.setCurrentAccount(this.currentAccount);
-      this.editMode = false;
-      this.showMessage('Profile updated successfully!', 'success');
-    }
+saveChanges() {
+  if (!this.editedName || this.editedName.trim().length < 2) {
+    this.showMessage('Name must be at least 2 characters long', 'error');
+    return;
   }
+
+  if (this.currentAccount) {
+    const updatedRequest = {
+      name: this.editedName.trim()
+    };
+
+    this.accountService.updateAccount(this.currentAccount.id, updatedRequest).subscribe({
+      next: (updatedAccount) => {
+        this.currentAccount = updatedAccount;
+        this.accountService.setCurrentAccount(updatedAccount);
+        this.editMode = false;
+        this.showMessage('Profile updated successfully!', 'success');
+      },
+      error: (err) => {
+        this.showMessage('Failed to update profile', 'error');
+        console.error('Update failed:', err);
+      }
+    });
+  }
+}
+
 
   showMessage(text: string, type: string) {
     this.message = text;
