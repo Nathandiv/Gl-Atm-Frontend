@@ -24,7 +24,7 @@ export class BeneficiariesComponent implements OnInit {
 
   constructor(private accountService: AccountService, private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentAccount = this.accountService.getCurrentAccount();
     if (!this.currentAccount) {
       this.router.navigate(['/login']);
@@ -34,7 +34,7 @@ export class BeneficiariesComponent implements OnInit {
     this.loadAllAccounts();
   }
 
-  loadBeneficiaries() {
+  loadBeneficiaries(): void {
     this.accountService.getAllBeneficiaries().subscribe({
       next: (beneficiaries) => {
         // Filter beneficiaries where current account is the sender
@@ -46,7 +46,7 @@ export class BeneficiariesComponent implements OnInit {
     });
   }
 
-  loadAllAccounts() {
+  loadAllAccounts(): void {
     this.accountService.getAllAccounts().subscribe({
       next: (accounts) => {
         // Filter out current account
@@ -63,7 +63,7 @@ export class BeneficiariesComponent implements OnInit {
     return account ? account.name : `Account ${accountId}`;
   }
 
-  addBeneficiary() {
+  addBeneficiary(): void {
     if (!this.currentAccount) return;
 
     if (!this.selectedRecipientId) {
@@ -95,10 +95,28 @@ export class BeneficiariesComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
+        console.error('Add beneficiary error:', error);
         this.showMessage('Failed to add beneficiary. Please try again.', 'error');
         this.isLoading = false;
       }
     });
+  }
+
+  deleteBeneficiary(recipientId: number): void {
+    if (!this.currentAccount) return;
+
+    if (confirm('Are you sure you want to delete this beneficiary?')) {
+      this.accountService.deleteBeneficiary(this.currentAccount.id, recipientId).subscribe({
+        next: (response) => {
+          this.showMessage('Beneficiary deleted successfully!', 'success');
+          this.loadBeneficiaries();
+        },
+        error: (error) => {
+          console.error('Delete beneficiary error:', error);
+          this.showMessage('Failed to delete beneficiary. Please try again.', 'error');
+        }
+      });
+    }
   }
 
   getAvailableAccounts(): Account[] {
@@ -106,11 +124,11 @@ export class BeneficiariesComponent implements OnInit {
     return this.allAccounts.filter(account => !beneficiaryIds.includes(account.id));
   }
 
-  transferToBeneficiary(recipientId: number) {
+  transferToBeneficiary(recipientId: number): void {
     this.router.navigate(['/transfer'], { queryParams: { recipientId: recipientId } });
   }
 
-  showMessage(text: string, type: string) {
+  showMessage(text: string, type: string): void {
     this.message = text;
     this.messageType = type;
     setTimeout(() => {
@@ -118,7 +136,7 @@ export class BeneficiariesComponent implements OnInit {
     }, 5000);
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['/dashboard']);
   }
 }

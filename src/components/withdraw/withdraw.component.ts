@@ -16,6 +16,7 @@ export class WithdrawComponent implements OnInit {
   currentAccount: Account | null = null;
   currentBalance: number = 0;
   amount: number = 0;
+  pin: number = 0;
   isLoading = false;
   message = '';
   messageType = '';
@@ -36,6 +37,7 @@ export class WithdrawComponent implements OnInit {
       this.accountService.getBalance(this.currentAccount.id).subscribe({
         next: (balance) => {
           this.currentBalance = balance;
+          console.log('Current balance loaded:', balance);
         },
         error: (error) => {
           console.error('Error loading balance:', error);
@@ -59,25 +61,49 @@ export class WithdrawComponent implements OnInit {
 
     this.isLoading = true;
     this.message = '';
+const withdrawRequest: WithdrawRequest = {
+  accountId: this.currentAccount.id,
+  amount: this.amount,
+  pin: this.pin 
+};
 
-    const withdrawRequest: WithdrawRequest = {
-      accountId: this.currentAccount.id,
-      amount: this.amount
-    };
+    console.log('Withdraw request:', withdrawRequest);
+    console.log('Attempting withdraw with request body...');
 
+    // First try with request body
     this.accountService.withdraw(withdrawRequest).subscribe({
       next: (response) => {
+        console.log('Withdraw response:', response);
         this.showMessage('Withdrawal successful!', 'success');
         this.amount = 0;
-        this.loadBalance();
+        this.loadBalance(); // Reload balance to show updated amount
         this.isLoading = false;
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
         }, 2000);
       },
       error: (error) => {
-        this.showMessage('Withdrawal failed. Please try again.', 'error');
-        this.isLoading = false;
+        console.error('Withdraw with body failed:', error);
+        console.log('Trying withdraw with query parameters...');
+        
+        // If body method fails, try with query parameters
+        this.accountService.withdrawWithParams(this.currentAccount!.id, this.amount).subscribe({
+          next: (response) => {
+            console.log('Withdraw with params response:', response);
+            this.showMessage('Withdrawal successful!', 'success');
+            this.amount = 0;
+            this.loadBalance();
+            this.isLoading = false;
+            setTimeout(() => {
+              this.router.navigate(['/dashboard']);
+            }, 2000);
+          },
+          error: (paramError) => {
+            console.error('Withdraw with params also failed:', paramError);
+            this.showMessage('Withdrawal failed. Please check your backend connection.', 'error');
+            this.isLoading = false;
+          }
+        });
       }
     });
   }

@@ -215,6 +215,12 @@
   font-size: 14px;
 }
 
+.beneficiary-actions {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
 .transfer-btn-small {
   background: linear-gradient(135deg, #4299e1, #3182ce);
   color: white;
@@ -228,6 +234,22 @@
 }
 
 .transfer-btn-small:hover {
+  transform: translateY(-1px);
+}
+
+.delete-btn-small {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.delete-btn-small:hover {
   transform: translateY(-1px);
 }
 
@@ -267,5 +289,10 @@
     flex-direction: column;
     gap: 15px;
     text-align: center;
+  }
+
+  .beneficiary-actions {
+    flex-direction: row;
+    justify-content: center;
   }
 }

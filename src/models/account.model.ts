@@ -18,6 +18,7 @@ export interface RegisterRequest {
 export interface WithdrawRequest {
   accountId: number;
   amount: number;
+  pin: number;
 }
 
 export interface AddBeneficiaryRequest {

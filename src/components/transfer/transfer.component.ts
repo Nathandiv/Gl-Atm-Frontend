@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { Account } from '../../models/account.model';
 
@@ -22,7 +22,11 @@ export class TransferComponent implements OnInit {
   message = '';
   messageType = '';
 
-  constructor(private accountService: AccountService, private router: Router) {}
+  constructor(
+    private accountService: AccountService, 
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.currentAccount = this.accountService.getCurrentAccount();
@@ -32,6 +36,13 @@ export class TransferComponent implements OnInit {
     }
     this.loadBalance();
     this.loadAllAccounts();
+    
+    // Check if recipientId is passed as query parameter (from beneficiaries page)
+    this.route.queryParams.subscribe(params => {
+      if (params['recipientId']) {
+        this.recipientId = parseInt(params['recipientId'], 10);
+      }
+    });
   }
 
   loadBalance() {
@@ -85,8 +96,15 @@ export class TransferComponent implements OnInit {
     this.isLoading = true;
     this.message = '';
 
+    console.log('Transfer request:', {
+      senderId: this.currentAccount.id,
+      recipientId: this.recipientId,
+      amount: this.amount
+    });
+
     this.accountService.transfer(this.currentAccount.id, this.recipientId, this.amount).subscribe({
       next: (response) => {
+        console.log('Transfer response:', response);
         this.showMessage('Transfer successful!', 'success');
         this.amount = 0;
         this.recipientId = 0;
@@ -97,6 +115,7 @@ export class TransferComponent implements OnInit {
         }, 2000);
       },
       error: (error) => {
+        console.error('Transfer error:', error);
         this.showMessage('Transfer failed. Please try again.', 'error');
         this.isLoading = false;
       }

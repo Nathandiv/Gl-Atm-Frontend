@@ -7,7 +7,7 @@
 
     <div class="account-info">
       <p><strong>From:</strong> {{ currentAccount?.name }}</p>
-      <p><strong>Available Balance:</strong> ${{ currentBalance | number:'1.2-2' }}</p>
+      <p><strong>Available Balance:</strong> R{{ currentBalance | number:'1.2-2' }}</p>
     </div>
 
     <form (ngSubmit)="onTransfer()" class="transfer-form">
@@ -37,7 +37,7 @@
       <div class="input-group">
         <label for="amount">Transfer Amount</label>
         <div class="amount-input-wrapper">
-          <span class="currency-symbol">$</span>
+          <span class="currency-symbol">R</span>
           <input
             type="number"
             id="amount"
@@ -76,11 +76,11 @@
         </div>
         <div class="summary-row">
           <span>Amount:</span>
-          <span>${{ amount | number:'1.2-2' }}</span>
+          <span>R{{ amount | number:'1.2-2' }}</span>
         </div>
         <div class="summary-row total">
           <span>Balance After:</span>
-          <span>${{ (currentBalance - amount) | number:'1.2-2' }}</span>
+          <span>R{{ (currentBalance - amount) | number:'1.2-2' }}</span>
         </div>
       </div>
     </div>

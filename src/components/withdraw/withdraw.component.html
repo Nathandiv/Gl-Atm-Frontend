@@ -7,14 +7,14 @@
 
     <div class="account-info">
       <p><strong>Account:</strong> {{ currentAccount?.name }}</p>
-      <p><strong>Available Balance:</strong> ${{ currentBalance | number:'1.2-2' }}</p>
+      <p><strong>Available Balance:</strong> R{{ currentBalance | number:'1.2-2' }}</p>
     </div>
 
     <form (ngSubmit)="onWithdraw()" class="withdraw-form">
       <div class="input-group">
         <label for="amount">Withdrawal Amount</label>
         <div class="amount-input-wrapper">
-          <span class="currency-symbol">$</span>
+          <span class="currency-symbol">R</span>
           <input
             type="number"
             id="amount"
@@ -29,7 +29,7 @@
           />
         </div>
         <div class="balance-info">
-          Maximum withdrawal: ${{ currentBalance | number:'1.2-2' }}
+          Maximum withdrawal: R{{ currentBalance | number:'1.2-2' }}
         </div>
       </div>
 
@@ -46,9 +46,9 @@
     <div class="quick-amounts" *ngIf="currentBalance > 0">
       <h3>Quick Withdrawal</h3>
       <div class="quick-buttons">
-        <button class="quick-btn" (click)="amount = 20" [disabled]="currentBalance < 20">$20</button>
-        <button class="quick-btn" (click)="amount = 50" [disabled]="currentBalance < 50">$50</button>
-        <button class="quick-btn" (click)="amount = 100" [disabled]="currentBalance < 100">$100</button>
+        <button class="quick-btn" (click)="amount = 20" [disabled]="currentBalance < 20">R20</button>
+        <button class="quick-btn" (click)="amount = 50" [disabled]="currentBalance < 50">R50</button>
+        <button class="quick-btn" (click)="amount = 100" [disabled]="currentBalance < 100">R100</button>
         <button class="quick-btn" (click)="amount = currentBalance">All</button>
       </div>
     </div>

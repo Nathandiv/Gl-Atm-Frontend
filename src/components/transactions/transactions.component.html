@@ -36,10 +36,10 @@
           <div class="transaction-amount" [class]="getTransactionClass(transaction.type)">
             <span *ngIf="getTransactionClass(transaction.type) === 'credit'">+</span>
             <span *ngIf="getTransactionClass(transaction.type) === 'debit'">-</span>
-            ${{ transaction.amount | number:'1.2-2' }}
+            R{{ transaction.amount | number:'1.2-2' }}
           </div>
           <div class="balance-after">
-            Balance: ${{ transaction.balanceAfter | number:'1.2-2' }}
+            Balance: R{{ transaction.balanceAfter | number:'1.2-2' }}
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="summary-item">
           <span class="summary-label">Latest Balance</span>
-          <span class="summary-value">${{ transactions[0]?.balanceAfter | number:'1.2-2' }}</span>
+          <span class="summary-value">R{{ transactions[0]?.balanceAfter | number:'1.2-2' }}</span>
         </div>
       </div>
     </div>
