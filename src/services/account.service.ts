@@ -123,14 +123,15 @@ transfer(senderId: number, recipientId: number, amount: number, pin: number): Ob
       .pipe(catchError(this.handleError));
   }
 
-  deleteBeneficiary(senderId: number, recipientId: number): Observable<string> {
-    const params = new HttpParams()
-      .set('senderId', senderId.toString())
-      .set('recipientId', recipientId.toString());
-    console.log('Delete beneficiary request - URL:', `${this.baseUrl}/beneficiaries`, 'Params:', params.toString());
-    return this.http.delete(`${this.baseUrl}/beneficiaries`, { params, responseType: 'text' })
-      .pipe(catchError(this.handleError));
-  }
+deleteBeneficiary(senderId: number, recipientId: number): Observable<string> {
+  const params = new HttpParams()
+    .set('senderId', senderId.toString())
+    .set('recipientId', recipientId.toString());
+  console.log('Delete beneficiary request - URL:', `${this.baseUrl}/beneficiaries`, 'Params:', params.toString());
+  return this.http.delete(`${this.baseUrl}/beneficiaries`, { params, responseType: 'text' })
+    .pipe(catchError(this.handleError));
+}
+
 
   getAllBeneficiaries(): Observable<Beneficiary[]> {
     console.log('Getting all beneficiaries from:', `${this.baseUrl}/beneficiaries`);
