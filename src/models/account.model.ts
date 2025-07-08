@@ -31,6 +31,12 @@ export interface Beneficiary {
   recipientId: number;
 }
 
+export interface UpdateRequest {
+  name?: string;
+  pin?: number;
+  balance?: number;
+}
+
 export interface BankTransaction {
   id: number;
   account: Account;
